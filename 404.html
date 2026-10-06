@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>页面不存在 - TNS 资讯</title>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --accent:#007AFF;
+    --red:#FF3B30;
+    --bg:#F2F2F7;
+    --card:#FFFFFF;
+    --text:#000000;
+    --text-2:rgba(60,60,67,.60);
+    --text-3:rgba(60,60,67,.33);
+    --sep:rgba(60,60,67,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --accent:#0A84FF;
+      --red:#FF453A;
+      --bg:#000000;
+      --card:#1C1C1E;
+      --text:#FFFFFF;
+      --text-2:rgba(235,235,245,.60);
+      --text-3:rgba(235,235,245,.30);
+      --sep:rgba(84,84,88,.55);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Helvetica Neue",system-ui,sans-serif;
+    background:var(--bg);color:var(--text);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+  }
+  .container{
+    max-width:380px;width:100%;text-align:center;
+    background:var(--card);border-radius:18px;padding:32px 24px;
+    box-shadow:0 4px 24px rgba(0,0,0,.08);
+  }
+  .icon-wrap{
+    width:80px;height:80px;border-radius:50%;
+    background:rgba(0,122,255,.10);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 20px;
+  }
+  .icon-wrap i{font-size:40px;color:var(--accent);}
+  .code{font-size:64px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:8px;}
+  .title{font-size:18px;font-weight:600;margin-bottom:8px;}
+  .desc{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:24px;}
+  .btns{display:flex;flex-direction:column;gap:10px;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 20px;border-radius:12px;font-size:15px;font-weight:500;
+    text-decoration:none;cursor:pointer;transition:opacity .15s;
+    border:none;font-family:inherit;
+  }
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-secondary{background:rgba(120,120,128,.12);color:var(--text);}
+  .btn:active{opacity:.7;}
+  .footer{margin-top:24px;font-size:11px;color:var(--text-3);}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon-wrap"><i class="fas fa-mountain"></i></div>
+    <div class="code">404</div>
+    <div class="title">页面走丢了</div>
+    <div class="desc">你访问的页面不存在或已被移动。<br>就像迷路的登山者，找不到上山的路。</div>
+    <div class="btns">
+      <a href="/" class="btn btn-primary"><i class="fas fa-house"></i> 返回首页</a>
+      <button class="btn btn-secondary" onclick="history.back()"><i class="fas fa-arrow-left"></i> 返回上页</button>
+    </div>
+    <div class="footer">TNS 资讯 ｜ Silver Mountain © 2023–2026</div>
+  </div>
+</body>
+</html>

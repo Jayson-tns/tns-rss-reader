@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-font="medium">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="msvalidate.01" content="1C904E218FF998D9D676D637908F2B4E" />
+<title>TNS 资讯</title>
+<meta name="description" content="TNS 资讯 - 网页 RSS 阅读器">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="TNS资讯">
+<meta name="theme-color" id="metaTheme" content="#007AFF">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/qweather-icons@1.3.0/font/qweather-icons.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="app-header" id="appHeader">
+    <div class="header-inner">
+      <div class="header-top">
+        <h1 class="large-title" id="hdrTitle">TNS 资讯</h1>
+        <div class="header-actions">
+          <button class="hbtn rail-open-btn" id="railOpenBtn" title="展开侧边栏"><i class="fas fa-bars"></i></button>
+          <button class="hbtn" id="btnSearch" title="搜索"><i class="fas fa-magnifying-glass"></i></button>
+          <button class="hbtn" id="btnRefresh" title="刷新新闻流"><i class="fas fa-arrow-rotate-right"></i></button>
+          <button class="hbtn" id="btnSettingsTop" title="设置"><i class="fas fa-gear"></i></button>
+        </div>
+      </div>
+      <div class="hdr-sub">
+        <span id="hdrDate">…</span>
+        <span class="hdr-dot">·</span>
+        <span id="hdrWeather" class="hdr-weather"><i class="fas fa-cloud-sun"></i> 天气加载中</span>
+      </div>
+      <div class="search-bar" id="searchBar">
+        <i class="fas fa-magnifying-glass"></i>
+        <input id="searchInput" placeholder="搜索新闻标题">
+        <button class="sb-clear" id="searchClear"><i class="fas fa-xmark"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav-rail" id="navRail">
+    <div class="rail-brand"><i class="fas fa-mountain"></i></div>
+    <button class="rail-item active" data-view="home" title="主页"><i class="fas fa-house"></i><span>主页</span></button>
+    <button class="rail-item" data-view="favorites" title="收藏"><i class="fas fa-star"></i><span>收藏</span></button>
+    <button class="rail-item" data-view="history" title="历史"><i class="fas fa-clock-rotate-left"></i><span>历史</span></button>
+    <button class="rail-item" data-view="market" title="源市场"><i class="fas fa-store"></i><span>源市场</span></button>
+    <button class="rail-item" data-view="settings" title="设置"><i class="fas fa-gear"></i><span>设置</span></button>
+    <button class="rail-toggle" id="railToggle" title="收起侧边栏"><i class="fas fa-angles-left"></i></button>
+  </nav>
+
+  <main class="app-main">
+    <section class="view active" id="view-home">
+      <div class="home-status" id="homeStatus"></div>
+      <div id="homeList"></div>
+    </section>
+
+    <section class="view" id="view-favorites">
+      <h2 class="large-title view-lt"><i class="fas fa-star"></i> 收藏</h2>
+      <div class="ios-card" id="favList"></div>
+    </section>
+
+    <section class="view" id="view-history">
+      <div class="view-lt-row">
+        <h2 class="large-title view-lt"><i class="fas fa-clock-rotate-left"></i> 历史</h2>
+        <button class="text-btn danger" id="btnClearHistory">清空</button>
+      </div>
+      <div class="ios-card" id="historyList"></div>
+    </section>
+
+    <section class="view" id="view-market">
+      <h2 class="large-title view-lt"><i class="fas fa-store"></i> 源市场</h2>
+      <div class="market-search">
+        <i class="fas fa-magnifying-glass"></i>
+        <input id="marketSearch" placeholder="搜索源名称或描述">
+      </div>
+      <div class="seg-wrap"><div class="seg" id="marketTabs"></div></div>
+      <div id="marketList"></div>
+    </section>
+
+    <section class="view" id="view-settings">
+      <h2 class="large-title view-lt"><i class="fas fa-gear"></i> 设置</h2>
+
+      <div class="group-label">外观</div>
+      <div class="ios-card">
+        <div class="set-row">
+          <span class="set-icon" style="background:#007AFF"><i class="fas fa-circle-half-stroke"></i></span>
+          <span class="set-label">主题</span>
+          <select id="setTheme">
+            <option value="light">浅色</option>
+            <option value="dark">深色</option>
+            <option value="oled">OLED 纯黑</option>
+            <option value="auto">跟随系统</option>
+          </select>
+        </div>
+        <div class="set-row">
+          <span class="set-icon" style="background:#FF9500"><i class="fas fa-text-height"></i></span>
+          <span class="set-label">字号</span>
+          <select id="setFont">
+            <option value="small">小</option>
+            <option value="medium">标准</option>
+            <option value="large">大</option>
+          </select>
+        </div>
+        <div class="set-row">
+          <span class="set-icon" style="background:#34C759"><i class="fas fa-image"></i></span>
+          <span class="set-label">新闻视图</span>
+          <select id="setView">
+            <option value="compact">紧凑无图</option>
+            <option value="image">图文模式</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="group-label">添加订阅源</div>
+      <div class="ios-card">
+        <div class="add-src">
+          <input id="srcName" placeholder="源名称，如：少数派">
+          <input id="srcUrl" placeholder="RSS 地址 https://…">
+        </div>
+        <div class="add-src-btns">
+          <button class="btn plain" id="srcTest"><i class="fas fa-flask"></i> 测试链接</button>
+          <button class="btn" id="srcAdd"><i class="fas fa-plus"></i> 添加源</button>
+        </div>
+        <div id="srcTestResult"></div>
+      </div>
+
+      <div class="group-label">我的订阅 <span class="count-tag" id="srcCount">0</span></div>
+      <div class="ios-card" id="mySources"></div>
+
+      <div class="group-label">导入 / 导出</div>
+      <div class="ios-card">
+        <div class="set-row link" id="expJson">
+          <span class="set-icon" style="background:#8E8E93"><i class="fas fa-download"></i></span>
+          <span class="set-label">导出订阅 JSON</span>
+          <i class="fas fa-chevron-right chev"></i>
+        </div>
+        <div class="set-row link" id="impJson">
+          <span class="set-icon" style="background:#8E8E93"><i class="fas fa-upload"></i></span>
+          <span class="set-label">导入订阅 JSON</span>
+          <i class="fas fa-chevron-right chev"></i>
+        </div>
+        <div class="set-row link" id="expOpml">
+          <span class="set-icon" style="background:#5856D6"><i class="fas fa-file-export"></i></span>
+          <span class="set-label">导出 OPML</span>
+          <i class="fas fa-chevron-right chev"></i>
+        </div>
+        <div class="set-row link" id="impOpml">
+          <span class="set-icon" style="background:#5856D6"><i class="fas fa-file-import"></i></span>
+          <span class="set-label">导入 OPML</span>
+          <i class="fas fa-chevron-right chev"></i>
+        </div>
+      </div>
+
+      <input type="file" id="fileJson" accept=".json" hidden>
+      <input type="file" id="fileOpml" accept=".opml,.xml" hidden>
+
+      <div class="group-label">关于</div>
+      <div class="ios-card">
+        <div class="set-row link" data-view="changelog">
+          <span class="set-icon" style="background:#007AFF"><i class="fas fa-clipboard-list"></i></span>
+          <span class="set-label">更新日志</span><i class="fas fa-chevron-right chev"></i>
+        </div>
+        <div class="set-row link" data-view="help">
+          <span class="set-icon" style="background:#30B0C7"><i class="fas fa-circle-question"></i></span>
+          <span class="set-label">帮助中心</span><i class="fas fa-chevron-right chev"></i>
+        </div>
+        <div class="set-row link" data-view="privacy">
+          <span class="set-icon" style="background:#34C759"><i class="fas fa-shield-halved"></i></span>
+          <span class="set-label">隐私政策</span><i class="fas fa-chevron-right chev"></i>
+        </div>
+        <div class="set-row link" data-view="agreement">
+          <span class="set-icon" style="background:#FF9500"><i class="fas fa-file-signature"></i></span>
+          <span class="set-label">用户协议</span><i class="fas fa-chevron-right chev"></i>
+        </div>
+        <div class="set-row link" data-view="browser">
+          <span class="set-icon" style="background:#AF52DE"><i class="fas fa-stethoscope"></i></span>
+          <span class="set-label">兼容性检测</span><i class="fas fa-chevron-right chev"></i>
+        </div>
+      </div>
+      <p class="ver-tag"><i class="fas fa-mountain"></i> TNS RSS Reader V1.0</p>
+    </section>
+
+    <section class="view" id="view-changelog">
+      <div class="view-lt-row">
+        <h2 class="large-title view-lt"><i class="fas fa-clipboard-list"></i> 更新日志</h2>
+        <button class="text-btn" id="backFromChangelog">返回</button>
+      </div>
+      <div class="doc-box" id="changelogBox"></div>
+    </section>
+
+    <section class="view" id="view-help">
+      <div class="view-lt-row">
+        <h2 class="large-title view-lt"><i class="fas fa-circle-question"></i> 帮助中心</h2>
+        <button class="text-btn" id="backFromHelp">返回</button>
+      </div>
+      <div class="doc-box" id="helpBox"></div>
+    </section>
+
+    <section class="view" id="view-privacy">
+      <div class="view-lt-row">
+        <h2 class="large-title view-lt"><i class="fas fa-shield-halved"></i> 隐私政策</h2>
+        <button class="text-btn" id="backFromPrivacy">返回</button>
+      </div>
+      <div class="doc-box" id="privacyBox"></div>
+    </section>
+
+    <section class="view" id="view-agreement">
+      <div class="view-lt-row">
+        <h2 class="large-title view-lt"><i class="fas fa-file-signature"></i> 用户协议</h2>
+        <button class="text-btn" id="backFromAgreement">返回</button>
+      </div>
+      <div class="doc-box" id="agreementBox"></div>
+    </section>
+
+    <section class="view" id="view-browser">
+      <div class="view-lt-row">
+        <h2 class="large-title view-lt"><i class="fas fa-stethoscope"></i> 兼容性检测</h2>
+        <button class="text-btn" id="backFromBrowser">返回</button>
+      </div>
+      <div class="doc-box" id="browserBox"></div>
+    </section>
+
+    <footer class="app-footer"><i class="fas fa-copyright"></i> TNS 资讯 ｜ 2026 - 现在</footer>
+  </main>
+
+  <nav class="tab-bar">
+    <button class="tb-item active" data-view="home"><i class="fas fa-house"></i><span>主页</span></button>
+    <button class="tb-item" data-view="favorites"><i class="fas fa-star"></i><span>收藏</span></button>
+    <button class="tb-item" data-view="history"><i class="fas fa-clock-rotate-left"></i><span>历史</span></button>
+    <button class="tb-item" data-view="market"><i class="fas fa-store"></i><span>市场</span></button>
+    <button class="tb-item" data-view="settings"><i class="fas fa-gear"></i><span>设置</span></button>
+  </nav>
+</div>
+
+<div class="sheet-mask" id="sheetMask" hidden>
+  <div class="sheet">
+    <div class="sheet-grab"></div>
+    <div class="sheet-body" id="sheetBody"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="weather.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
